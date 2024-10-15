@@ -1,0 +1,449 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Aug 12, 2024 at 01:03 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `popitdb`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `address`
+--
+
+CREATE TABLE `address` (
+  `addressId` int(11) NOT NULL,
+  `street_no` varchar(100) NOT NULL,
+  `userId` int(11) DEFAULT NULL,
+  `locationId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `adminId` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `surname` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `phone` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `country`
+--
+
+CREATE TABLE `country` (
+  `countryId` int(11) NOT NULL,
+  `countryName` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee`
+--
+
+CREATE TABLE `employee` (
+  `employeeId` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `surname` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `phone` varchar(45) NOT NULL,
+  `workPositionId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employeeservice`
+--
+
+CREATE TABLE `employeeservice` (
+  `employeeServiceId` int(11) NOT NULL,
+  `serviceId` int(11) DEFAULT NULL,
+  `employeeId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `location`
+--
+
+CREATE TABLE `location` (
+  `locationId` int(11) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `postalCode` varchar(45) NOT NULL,
+  `countryId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order`
+--
+
+CREATE TABLE `order` (
+  `orderId` int(11) NOT NULL,
+  `orderDate` date NOT NULL,
+  `orderStatus` varchar(45) NOT NULL,
+  `totalAmount` varchar(45) NOT NULL,
+  `userId` int(11) DEFAULT NULL,
+  `createdByAdminId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orderdetail`
+--
+
+CREATE TABLE `orderdetail` (
+  `orderDetailId` int(11) NOT NULL,
+  `orderQuantity` int(11) NOT NULL,
+  `unitPrice` int(11) NOT NULL,
+  `productId` int(11) DEFAULT NULL,
+  `orderId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product`
+--
+
+CREATE TABLE `product` (
+  `productId` int(11) NOT NULL,
+  `productName` varchar(45) NOT NULL,
+  `productDesc` varchar(200) DEFAULT NULL,
+  `productPrice` int(11) NOT NULL,
+  `productStock` int(11) NOT NULL,
+  `productImage` varchar(256) DEFAULT NULL,
+  `categoryId` int(11) DEFAULT NULL,
+  `createdByAdminId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `productcategory`
+--
+
+CREATE TABLE `productcategory` (
+  `categoryId` int(11) NOT NULL,
+  `categoryName` varchar(45) NOT NULL,
+  `categoryDesc` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `service`
+--
+
+CREATE TABLE `service` (
+  `serviceId` int(11) NOT NULL,
+  `serviceName` varchar(45) NOT NULL,
+  `serviceDesc` varchar(200) DEFAULT NULL,
+  `servicePrice` int(10) NOT NULL,
+  `serviceTypeId` int(11) DEFAULT NULL,
+  `createdByAdminId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `servicerequest`
+--
+
+CREATE TABLE `servicerequest` (
+  `requestId` int(11) NOT NULL,
+  `requestDate` date NOT NULL,
+  `status` varchar(45) NOT NULL,
+  `problemDesc` varchar(200) DEFAULT NULL,
+  `userId` int(11) DEFAULT NULL,
+  `createdByAdminId` int(11) DEFAULT NULL,
+  `serviceId` int(11) DEFAULT NULL,
+  `employeeId` int(11) DEFAULT NULL,
+  `communication` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `servicetype`
+--
+
+CREATE TABLE `servicetype` (
+  `typeId` int(11) NOT NULL,
+  `typeName` varchar(45) NOT NULL,
+  `typeDesc` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `userId` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `surname` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `pass` varchar(300) NOT NULL,
+  `phoneNumber` varchar(45) NOT NULL,
+  `createdByAdminId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+--
+-- Table structure for table `workposition`
+--
+
+CREATE TABLE `workposition` (
+  `positionId` int(11) NOT NULL,
+  `positionName` varchar(45) NOT NULL,
+  `positionDesc` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workposition_has_employee`
+--
+
+CREATE TABLE `workposition_has_employee` (
+  `positionId` int(11) NOT NULL,
+  `employeeId` int(11) NOT NULL,
+  `dateFrom` date DEFAULT NULL,
+  `dateUntil` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `address`
+--
+ALTER TABLE `address`
+  ADD PRIMARY KEY (`addressId`),
+  ADD KEY `userId` (`userId`),
+  ADD KEY `locationId` (`locationId`);
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`adminId`);
+
+--
+-- Indexes for table `country`
+--
+ALTER TABLE `country`
+  ADD PRIMARY KEY (`countryId`);
+
+--
+-- Indexes for table `employee`
+--
+ALTER TABLE `employee`
+  ADD PRIMARY KEY (`employeeId`),
+  ADD KEY `workPositionId` (`workPositionId`);
+
+--
+-- Indexes for table `employeeservice`
+--
+ALTER TABLE `employeeservice`
+  ADD PRIMARY KEY (`employeeServiceId`),
+  ADD KEY `serviceId` (`serviceId`),
+  ADD KEY `employeeId` (`employeeId`);
+
+--
+-- Indexes for table `location`
+--
+ALTER TABLE `location`
+  ADD PRIMARY KEY (`locationId`),
+  ADD KEY `countryId` (`countryId`);
+
+--
+-- Indexes for table `order`
+--
+ALTER TABLE `order`
+  ADD PRIMARY KEY (`orderId`),
+  ADD KEY `userId` (`userId`),
+  ADD KEY `createdByAdminId` (`createdByAdminId`);
+
+--
+-- Indexes for table `orderdetail`
+--
+ALTER TABLE `orderdetail`
+  ADD PRIMARY KEY (`orderDetailId`),
+  ADD KEY `productId` (`productId`),
+  ADD KEY `orderId` (`orderId`);
+
+--
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`productId`),
+  ADD KEY `categoryId` (`categoryId`),
+  ADD KEY `createdByAdminId` (`createdByAdminId`);
+
+--
+-- Indexes for table `productcategory`
+--
+ALTER TABLE `productcategory`
+  ADD PRIMARY KEY (`categoryId`);
+
+--
+-- Indexes for table `service`
+--
+ALTER TABLE `service`
+  ADD PRIMARY KEY (`serviceId`),
+  ADD KEY `serviceTypeId` (`serviceTypeId`),
+  ADD KEY `createdByAdminId` (`createdByAdminId`);
+
+--
+-- Indexes for table `servicerequest`
+--
+ALTER TABLE `servicerequest`
+  ADD PRIMARY KEY (`requestId`),
+  ADD KEY `userId` (`userId`),
+  ADD KEY `createdByAdminId` (`createdByAdminId`),
+  ADD KEY `serviceId` (`serviceId`),
+  ADD KEY `employeeId` (`employeeId`);
+
+--
+-- Indexes for table `servicetype`
+--
+ALTER TABLE `servicetype`
+  ADD PRIMARY KEY (`typeId`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`userId`),
+  ADD KEY `createdByAdminId` (`createdByAdminId`);
+
+--
+-- Indexes for table `workposition`
+--
+ALTER TABLE `workposition`
+  ADD PRIMARY KEY (`positionId`);
+
+--
+-- Indexes for table `workposition_has_employee`
+--
+ALTER TABLE `workposition_has_employee`
+  ADD PRIMARY KEY (`positionId`,`employeeId`),
+  ADD KEY `employeeId` (`employeeId`);
+
+--
+-- Constraints for table `address`
+--
+ALTER TABLE `address`
+  ADD CONSTRAINT `address_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`),
+  ADD CONSTRAINT `address_ibfk_2` FOREIGN KEY (`locationId`) REFERENCES `location` (`locationId`);
+
+--
+-- Constraints for table `employee`
+--
+ALTER TABLE `employee`
+  ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`workPositionId`) REFERENCES `workposition` (`positionId`);
+
+--
+-- Constraints for table `employeeservice`
+--
+ALTER TABLE `employeeservice`
+  ADD CONSTRAINT `employeeservice_ibfk_1` FOREIGN KEY (`serviceId`) REFERENCES `service` (`serviceId`),
+  ADD CONSTRAINT `employeeservice_ibfk_2` FOREIGN KEY (`employeeId`) REFERENCES `employee` (`employeeId`);
+
+--
+-- Constraints for table `location`
+--
+ALTER TABLE `location`
+  ADD CONSTRAINT `location_ibfk_1` FOREIGN KEY (`countryId`) REFERENCES `country` (`countryId`);
+
+--
+-- Constraints for table `order`
+--
+ALTER TABLE `order`
+  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`),
+  ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`createdByAdminId`) REFERENCES `admin` (`adminId`);
+
+--
+-- Constraints for table `orderdetail`
+--
+ALTER TABLE `orderdetail`
+  ADD CONSTRAINT `orderdetail_ibfk_1` FOREIGN KEY (`productId`) REFERENCES `product` (`productId`),
+  ADD CONSTRAINT `orderdetail_ibfk_2` FOREIGN KEY (`orderId`) REFERENCES `order` (`orderId`);
+
+--
+-- Constraints for table `product`
+--
+ALTER TABLE `product`
+  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`categoryId`) REFERENCES `productcategory` (`categoryId`),
+  ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`createdByAdminId`) REFERENCES `admin` (`adminId`);
+
+--
+-- Constraints for table `service`
+--
+ALTER TABLE `service`
+  ADD CONSTRAINT `service_ibfk_1` FOREIGN KEY (`serviceTypeId`) REFERENCES `servicetype` (`typeId`),
+  ADD CONSTRAINT `service_ibfk_2` FOREIGN KEY (`createdByAdminId`) REFERENCES `admin` (`adminId`);
+
+--
+-- Constraints for table `servicerequest`
+--
+ALTER TABLE `servicerequest`
+  ADD CONSTRAINT `servicerequest_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`),
+  ADD CONSTRAINT `servicerequest_ibfk_2` FOREIGN KEY (`createdByAdminId`) REFERENCES `admin` (`adminId`),
+  ADD CONSTRAINT `servicerequest_ibfk_3` FOREIGN KEY (`serviceId`) REFERENCES `service` (`serviceId`),
+  ADD CONSTRAINT `servicerequest_ibfk_4` FOREIGN KEY (`employeeId`) REFERENCES `employee` (`employeeId`);
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`createdByAdminId`) REFERENCES `admin` (`adminId`);
+
+--
+-- Constraints for table `workposition_has_employee`
+--
+ALTER TABLE `workposition_has_employee`
+  ADD CONSTRAINT `workposition_has_employee_ibfk_1` FOREIGN KEY (`positionId`) REFERENCES `workposition` (`positionId`),
+  ADD CONSTRAINT `workposition_has_employee_ibfk_2` FOREIGN KEY (`employeeId`) REFERENCES `employee` (`employeeId`);
+COMMIT;
+
