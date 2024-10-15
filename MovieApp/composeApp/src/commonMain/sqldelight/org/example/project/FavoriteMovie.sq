@@ -1,0 +1,23 @@
+CREATE TABLE favoriteMovie(
+    movieId INTEGER NOT NULL PRIMARY KEY,
+    fullPosterPath TEXT NOT NULL,
+    movieType TEXT NOT NULL
+);
+
+selectAllFavoriteMovies:
+SELECT *
+FROM favoriteMovie;
+
+getMovieById:
+SELECT *
+FROM favoriteMovie
+WHERE movieId = :movieId;
+
+removeMovieById:
+DELETE FROM favoriteMovie
+WHERE movieId= :movieId;
+
+insertFavoriteMoviesById:
+INSERT OR REPLACE
+INTO favoriteMovie (movieId, fullPosterPath, movieType)
+VALUES (?, ?, ?);
